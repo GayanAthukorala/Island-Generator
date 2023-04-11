@@ -10,7 +10,7 @@ public class Node {
     double y;
     int vertexId;
     ArrayList<Node> neighbours;
-    HashMap<Edge, Integer> edges;
+    HashMap<Edge, Double> edges;
 
 
     private void assignProperties(int id, double elev, double xValue, double yValue){
@@ -22,5 +22,12 @@ public class Node {
 
     private void assignNeighbour(Node neighbour){
         neighbours.add(neighbour);
+        Edge edge = new Edge();
+        edge.createEdge(this, neighbour);
+        this.edges.put(edge, edge.weight);
+        neighbour.edges.put(edge, edge.weight);
     }
+
+
+
 }
