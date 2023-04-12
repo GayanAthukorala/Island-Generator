@@ -1,6 +1,7 @@
 package graph.files;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class Node {
@@ -8,24 +9,31 @@ public class Node {
     double elevation;
     double x;
     double y;
-    int vertexId;
+    Double distance = Double.MAX_VALUE;
     ArrayList<Node> neighbours;
-    HashMap<Edge, Double> edges;
+    public ArrayList<Edge> edges;
 
 
-    private void assignProperties(int id, double elev, double xValue, double yValue){
+    public void assignProperties(double elev, double xValue, double yValue){
         elevation = elev;
-        vertexId = id;
         x = xValue;
         y = yValue;
     }
 
-    private void assignNeighbour(Node neighbour){
+    public void assignNeighbour(Node neighbour){
         neighbours.add(neighbour);
         Edge edge = new Edge();
         edge.createEdge(this, neighbour);
-        this.edges.put(edge, edge.weight);
-        neighbour.edges.put(edge, edge.weight);
+        this.edges.add(edge);
+        neighbour.edges.add(edge);
+    }
+
+    public void setDist(double dist){
+        distance = dist;
+    }
+
+    public double getDist(){
+        return distance;
     }
 
 

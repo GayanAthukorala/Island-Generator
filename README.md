@@ -159,9 +159,9 @@ When you develop features and enrich the product, remember that you have first t
 | F35  | HeatMaps                                                                                           | Gayan Athukorala           | Mar 25   | Mar 25   | Done    |
 | F36  | Loading Bar on Generator                                                                           | Raymond Ma                 | Mar 26   | Mar 26   | Done    |
 | F37  | Create Node Object                                                                                 | Gayan Athukorala           | April 5  | April 10 | Done    |
-| F38  | Create Edge Object                                                                                 | Gayan Athukorala           | April 10 |          | Started |
-| F39  | Create Method that connects node neighbours with an edge                                           | Gayan Athukorala           |          |          | Pending |
-| F40  | Create shortest path algorithm to find shortest path between two nodes                             | Gayan Athukorala           |          |          | Pending |
+| F38  | Create Edge Object                                                                                 | Gayan Athukorala           | April 10 | April 11 | Done    |
+| F39  | Interface for public contract of finding path between two nodes                                    | Gayan Athukorala           | April 11 | April 11 | Done    |
+| F40  | Algorithm to find shortest path between two nodes                                                  | Gayan Athukorala           | April 11 |          | Pending |
 
 
 

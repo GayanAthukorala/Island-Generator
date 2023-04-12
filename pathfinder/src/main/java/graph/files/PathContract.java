@@ -4,5 +4,5 @@ import java.util.ArrayList;
 
 public interface PathContract {
 
-    ArrayList<Node> dijkstrasAlgorithm();
+    ArrayList<Node> dijkstrasAlgorithm(Node startNode);
 }
