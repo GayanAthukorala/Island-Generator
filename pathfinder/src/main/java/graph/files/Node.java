@@ -11,8 +11,8 @@ public class Node {
     double y;
     int id;
     Double distance = Double.MAX_VALUE;
-    ArrayList<Node> neighbours;
-    public ArrayList<Edge> edges;
+    ArrayList<Node> neighbours = new ArrayList<>();
+    public ArrayList<Edge> edges = new ArrayList<>();
 
 
     public void assignProperties(double elev, double xValue, double yValue, int nodeId){
