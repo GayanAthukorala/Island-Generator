@@ -13,7 +13,7 @@ public class Main implements PathContract {
             double y = li.get(1);
             double elevation = li.get(2);
             Node node = new Node();
-            node.assignProperties(elevation,x,y);
+            node.assignProperties(elevation,x,y,rawNodeDataList.indexOf(li));
             nodeList.add(node);
         }
 
@@ -30,38 +30,56 @@ public class Main implements PathContract {
 
 
     @Override
-    public ArrayList<Node> dijkstrasAlgorithm(Node startNode) {
-        HashMap<Node, Node> paths = new HashMap<>();
-        LinkedList<Node> unCheckedNodes = new LinkedList<Node>();
-        unCheckedNodes.addAll(nodeList);
-        unCheckedNodes.remove(startNode);
+    public HashMap<Integer,Integer> dijkstrasAlgorithm(Node startNode) {
+        HashMap<Integer, Integer> paths = new HashMap<>();
+        LinkedList<Integer> unCheckedNodes = new LinkedList<Integer>();
+
+        for (Node n: nodeList){
+            unCheckedNodes.add(nodeList.indexOf(n));
+        }
+
+        unCheckedNodes.remove(nodeList.indexOf(startNode));
         startNode.setDist(0);
-        unCheckedNodes.addFirst(startNode);
-        while (unCheckedNodes!=null){
-            Node nodeFirst = unCheckedNodes.getFirst();
-            unCheckedNodes.remove(nodeFirst);
+        unCheckedNodes.addFirst(nodeList.indexOf(startNode));
+        paths.put(nodeList.indexOf(startNode), nodeList.indexOf(startNode));
+        while (!unCheckedNodes.isEmpty()){
+            Node nodeFirst = nodeList.get(unCheckedNodes.getFirst());
+            unCheckedNodes.remove(nodeList.indexOf(nodeFirst));
             for(Edge e: nodeFirst.edges){
                 Node nodeSecond;
-                if(nodeFirst == e.getNodes().get(0)){
-                    nodeSecond = e.getNodes().get(1);
+                if(nodeFirst == nodeList.get(e.getNodes().get(0))){
+                    nodeSecond = nodeList.get(e.getNodes().get(1));
                 }
-                else if(nodeFirst == e.getNodes().get(1)){
-                    nodeSecond = e.getNodes().get(0);
+                else if(nodeFirst == nodeList.get(e.getNodes().get(1))){
+                    nodeSecond = nodeList.get(e.getNodes().get(0));
                 }
                 else{
-                    nodeSecond = e.getNodes().get(1);
+                    nodeSecond = nodeList.get(e.getNodes().get(0));
                     System.out.println("error");
                 }
-                if ((nodeFirst.getDist() + e.getWeight()) < nodeSecond.getDist()){
-                    paths.put(nodeFirst, nodeSecond);
-                    nodeSecond.setDist(nodeFirst.getDist() + e.getWeight());
 
+                int index1 = nodeList.indexOf(nodeFirst);
+                int index2 = nodeList.indexOf(nodeSecond);
+
+                if ((nodeFirst.getDist() + e.getWeight()) < nodeSecond.getDist()){
+                    nodeSecond.setDist(nodeFirst.getDist() + e.getWeight());
+                    nodeList.set(index1, nodeFirst);
+                    nodeList.set(index2, nodeSecond);
+
+                    paths.put(nodeList.indexOf(nodeSecond), nodeList.indexOf(nodeFirst));
+
+                    for (Integer n: unCheckedNodes){
+                        if (nodeList.get(n).getDist() > nodeSecond.getDist()){
+                            unCheckedNodes.remove(nodeList.indexOf(nodeSecond));
+                            unCheckedNodes.add(unCheckedNodes.indexOf(n),nodeList.indexOf(nodeSecond));
+                        }
+                    }
                 }
             }
 
 
         }
 
-        return null;
+        return paths;
     }
 }

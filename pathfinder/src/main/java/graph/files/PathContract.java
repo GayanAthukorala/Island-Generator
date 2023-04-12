@@ -1,8 +1,9 @@
 package graph.files;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public interface PathContract {
 
-    ArrayList<Node> dijkstrasAlgorithm(Node startNode);
+    HashMap<Integer, Integer> dijkstrasAlgorithm(Node startNode);
 }

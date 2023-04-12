@@ -9,15 +9,17 @@ public class Node {
     double elevation;
     double x;
     double y;
+    int id;
     Double distance = Double.MAX_VALUE;
     ArrayList<Node> neighbours;
     public ArrayList<Edge> edges;
 
 
-    public void assignProperties(double elev, double xValue, double yValue){
+    public void assignProperties(double elev, double xValue, double yValue, int nodeId){
         elevation = elev;
         x = xValue;
         y = yValue;
+        id = nodeId;
     }
 
     public void assignNeighbour(Node neighbour){
