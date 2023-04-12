@@ -81,7 +81,7 @@ public class Cities{
         nodeList = graph.createGraph(cities,adjacentCities);
         cityHubIdx = (nodeList.size())/2;
         colorVertex(vertexList.get(cityVertexList.get(cityHubIdx)),0,255,0,255);
-        addThickness(vertexList.get(cityVertexList.get(cityHubIdx)),20.0);
+        addThickness(vertexList.get(cityVertexList.get(cityHubIdx)),12.0);
 
 
     }
@@ -117,6 +117,18 @@ public class Cities{
         Structs.Segment colored = Structs.Segment.newBuilder(seg).addProperties(color).build();
         // Set the old segment in the list as the new one with color property
         segmentList.set(segmentList.indexOf(seg), colored);
+    }
+
+    private void addThickness(Structs.Vertex v, double thickness){
+        if (thickness == 0){
+            Random rand = new Random();
+            thickness = rand.nextDouble(3.0,8.0);
+        }
+
+        Structs.Property thick = Structs.Property.newBuilder().setKey("thickness").setValue(String.valueOf(thickness)).build();
+        Structs.Vertex thickened = Structs.Vertex.newBuilder(v).addProperties(thick).build();
+        vertexList.set(vertexList.indexOf(v),thickened);
+
     }
 
 }
