@@ -121,6 +121,10 @@ public class Main {
             if (commandline.hasOption("heatmap")){
                 heatmap = commandline.getOptionValue("heatmap");
             }
+            if (commandline.hasOption("cities")){
+                cities = commandline.getOptionValue("cities");
+            }
+
 
             String errorMessage = "";
             if (!maxNumLakes.equals("")){
@@ -229,7 +233,7 @@ public class Main {
 
         // Island Generation
         IslandGen gen = new IslandGen();
-        Mesh myMesh = gen.generate(aMesh, seed, shape, elevType, elevationStartIdx, maxNumLakes, lakeStartIdx, rivers, riverStartIdx, aquifers, aquiferStartIdx, soil, biome, heatmap);
+        Mesh myMesh = gen.generate(aMesh, seed, shape, elevType, elevationStartIdx, maxNumLakes, lakeStartIdx, rivers, riverStartIdx, aquifers, aquiferStartIdx, soil, biome, heatmap, cities);
 
         // Outputing to new Mesh object
         MeshFactory factory = new MeshFactory();

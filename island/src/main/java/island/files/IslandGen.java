@@ -23,6 +23,7 @@ abstract class IslandSeed{
     boolean isSeed = false;
     int maxLakes;
     int lakeNum;
+    int cityNum;
     int lakeStartIdx;
     int riverNum;
     int riverStartIdx;
@@ -347,7 +348,7 @@ public class IslandGen extends IslandSeed {
         initalMaps();
     }
 
-    public Mesh generate(Mesh aMesh,String seedInput, String shape, String elevType, String elevationStartIdx,String maxNumLakes, String lakeStartingIdx, String rivers, String riverStartingIdx, String aquifers, String aquiferStartingIdx, String soilSelect, String biomeSelect, String map){
+    public Mesh generate(Mesh aMesh,String seedInput, String shape, String elevType, String elevationStartIdx,String maxNumLakes, String lakeStartingIdx, String rivers, String riverStartingIdx, String aquifers, String aquiferStartingIdx, String soilSelect, String biomeSelect, String map, String numCities){
         //Create new island
         Biomes biomeGen = new Biomes();
         //If user input a seed
@@ -416,85 +417,27 @@ public class IslandGen extends IslandSeed {
 
 
         //Cities
-        ArrayList<Integer> cityVertexList = new ArrayList<>();
-        ArrayList<ArrayList<Double>> cities = new ArrayList<>();
-        ArrayList<Double> city ;
-        List<Integer> adjacents;
-        ArrayList<List<Integer>> adjacentCities = new ArrayList<>();
-        ArrayList<Integer> landBlocks = new ArrayList<>(islandBlocks);
-        for(int lakeIdx : lakeIdxs){
-            landBlocks.remove((Integer) lakeIdx);
+
+        if (numCities.equals("") ||Integer.parseInt(numCities)>10 ){
+            Random rand = new Random();
+            cityNum = rand.nextInt(10);
+        }
+        else{
+            cityNum = Integer.parseInt(numCities);
         }
 
-        for(int i : landBlocks){
-            city = new ArrayList<>();
-            adjacents = new ArrayList<>();
-
-            Polygon poly =  polygonList.get(i);
-
-            for (int neighbour: poly.getNeighborIdxsList()){
-                adjacents.add(polygonList.get(neighbour).getCentroidIdx());
-            }
-            adjacentCities.add(adjacents);
-
-            double elev =  elevations.get(i);
-            cityVertexList.add(poly.getCentroidIdx());
-            int centroidIdx = poly.getCentroidIdx();
-            Vertex centroid = vertexList.get(centroidIdx);
-            colorVertex(centroid,0,255,0,255);
-            double x = centroid.getX();
-            double y = centroid.getY();
-
-            city.add(x);
-            city.add(y);
-            city.add(elev);
-            city.add((double) centroidIdx);
-            cities.add(city);
-
+        System.out.println(cityNum);
+        for (int i =0; i<cityNum-1;i++){
+            System.out.println("Gayan!");
+            Cities city = new Cities();
+            city.cityGen(cityNum, islandBlocks, lakeIdxs,polygonList,elevations,vertexList,segmentList);
+            city.createRoads(i);
+            vertexList = city.vertexList;
+            segmentList = city.segmentList;
         }
 
-//        for(int j =0; j<adjacentCities.size(); j++){
-//            List<Integer> neighbours = adjacentCities.get(j);
-//            for (int i=0; i<neighbours.size();i++){
-//
-//                neighbours.set(i,polygonList.get(neighbours.get(i)).getCentroidIdx());
-//            }
-//        }
-
-        System.out.println("adj cities");
-        System.out.println(adjacentCities);
-
-        System.out.println(cities);
-        System.out.println(adjacentCities);
-        Graph graph = new Graph();
-        ArrayList<Node> nodeList = graph.createGraph(cities,adjacentCities);
-        LinkedList<Integer> path = (graph.dijkstrasAlgorithm(nodeList.get(10), nodeList.get(20)));
-
-        for (int i = 0; i<path.size()-1;i++){
-            Segment road = Segment.newBuilder().setV1Idx(cityVertexList.get(path.get(i))).setV2Idx(cityVertexList.get(path.get(i+1))).build();
-            segmentList.add(road);
-            System.out.println(road);
-            colorSegment(road, 0,0,0,255);
-        }
 
         return Mesh.newBuilder().addAllVertices(vertexList).addAllSegments(segmentList).addAllPolygons(polygonList).build();
-    }
-
-    private void colorVertex(Structs.Vertex vertex, int red, int green, int blue, int alpha){
-        String colorCode = red + "," + green + "," + blue + "," + alpha;
-        // Create new Property with "rgb_color" key and the rgb value as the value
-        Structs.Property color = Structs.Property.newBuilder().setKey("rgb_color").setValue(colorCode).build();
-        Structs.Vertex colored = Structs.Vertex.newBuilder(vertex).addProperties(color).build();
-        // Set the old vertex in the list as the new one with color property
-        vertexList.set(vertexList.indexOf(vertex), colored);
-    }
-
-    private void colorSegment(Structs.Segment seg, int red, int green, int blue, int alpha){
-        // Create new Property with "rgb_color" key and the rgb value as the value
-        Structs.Property color = Structs.Property.newBuilder().setKey("rgb_color").setValue(red + "," + green + "," + blue+ "," + alpha).build();
-        Structs.Segment colored = Structs.Segment.newBuilder(seg).addProperties(color).build();
-        // Set the old segment in the list as the new one with color property
-        segmentList.set(segmentList.indexOf(seg), colored);
     }
 
 

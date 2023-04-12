@@ -92,8 +92,9 @@ public class GraphicRenderer {
     private void renderVertices(Mesh aMesh, Graphics2D canvas, String debug, boolean isIrreg){
         // FOR EACH VERTEX GET THE X AND Y VALUE, GET THE COLOR AND CREATE AN ELLIPSE2D VISUALIZED DOT
         for (Vertex v: aMesh.getVerticesList()) {
-            double centre_x = v.getX() - (THICKNESS/2.0d);
-            double centre_y = v.getY() - (THICKNESS/2.0d);
+            double thickness = extractVertexThickness(v.getPropertiesList());
+            double centre_x = v.getX() - (thickness/2.0d);
+            double centre_y = v.getY() - (thickness/2.0d);
             boolean isCentroid = false;
             boolean isWater = false;
             boolean isCity = false;
@@ -119,7 +120,7 @@ public class GraphicRenderer {
                 // If it is in debug mode, get all vertices colours
                 Color old = canvas.getColor();
                 canvas.setColor(extractColor(v.getPropertiesList()));
-                Ellipse2D point = new Ellipse2D.Double(centre_x, centre_y, THICKNESS, THICKNESS);
+                Ellipse2D point = new Ellipse2D.Double(centre_x, centre_y, thickness, thickness);
                 canvas.fill(point);
                 canvas.setColor(old);
             }
@@ -137,7 +138,7 @@ public class GraphicRenderer {
                     else{
                         canvas.setColor(extractColor(v.getPropertiesList()));
                     }
-                    Ellipse2D point = new Ellipse2D.Double(centre_x, centre_y, THICKNESS, THICKNESS);
+                    Ellipse2D point = new Ellipse2D.Double(centre_x, centre_y, thickness, thickness);
                     canvas.fill(point);
                     canvas.setColor(old);
 
@@ -150,7 +151,7 @@ public class GraphicRenderer {
                     } else {    // Colour the Vertices Black
                         canvas.setColor(Color.BLACK);
                     }
-                    Ellipse2D point = new Ellipse2D.Double(centre_x, centre_y, THICKNESS, THICKNESS);
+                    Ellipse2D point = new Ellipse2D.Double(centre_x, centre_y, thickness, thickness);
                     canvas.fill(point);
                     canvas.setColor(old);
                 }
@@ -180,11 +181,27 @@ public class GraphicRenderer {
             canvas.setColor(old);
         }
     }
+
+    private Double extractVertexThickness(List<Structs.Property> properties){
+        String val = null;
+        for(Structs.Property p: properties) {
+            // TRY TO FIND THE RGB COLOR
+            if (p.getKey().equals("thickness")) {
+                val = p.getValue();
+            }
+        }
+        if (val == null){       // IF no thickness, add thickness
+            return 3.0;
+        }
+        double valInt = Double.parseDouble(val);
+        return valInt;
+    }
+
     private Double extractThickness(List<Structs.Property> properties){
         String val = null;
         for(Structs.Property p: properties) {
             // TRY TO FIND THE RGB COLOR
-            if (p.getKey().equals("riverThickness")) {
+            if (p.getKey().equals("thickness")) {
                 val = p.getValue();
             }
         }

@@ -185,7 +185,7 @@ public class Rivers {
     private void increaseThickness(Structs.Segment segment){
         double previousThickness = extractThickness(segment,segment.getPropertiesList());
         double val = previousThickness*1.5;
-        Structs.Property thickness = Structs.Property.newBuilder().setKey("riverThickness").setValue(String.valueOf(val)).build();
+        Structs.Property thickness = Structs.Property.newBuilder().setKey("thickness").setValue(String.valueOf(val)).build();
         Structs.Segment thickened = Structs.Segment.newBuilder(segment).addProperties(thickness).build();
         segmentList.set(segmentList.indexOf(segment), thickened);
     }

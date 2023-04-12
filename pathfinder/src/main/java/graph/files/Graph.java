@@ -8,7 +8,7 @@ public class Graph implements PathContract{
 
     public ArrayList<Node> createGraph(ArrayList<ArrayList<Double>> rawNodeDataList, ArrayList<List<Integer>> connections){
         for (List<Double> li : rawNodeDataList){
-            System.out.println(li);
+//            System.out.println(li);
             double x = li.get(0);
             double y = li.get(1);
             double elevation = li.get(2);
@@ -20,8 +20,8 @@ public class Graph implements PathContract{
         }
 
         int missing = 0;
-        System.out.println("nodeList size");
-        System.out.println(nodeList.size());
+//        System.out.println("nodeList size");
+//        System.out.println(nodeList.size());
         for (int i = 0; i<nodeList.size(); i++){
             List<Integer> nodeConnections = connections.get(i);
             for (Integer connectedNodeIdx : nodeConnections){
@@ -36,7 +36,7 @@ public class Graph implements PathContract{
                 }
             }
         }
-        System.out.println(missing);
+//        System.out.println(missing);
 
         return nodeList;
 
@@ -54,8 +54,8 @@ public class Graph implements PathContract{
 
         unCheckedNodes.remove((Integer) nodeList.indexOf(startNode));
         startNode.setDist(0);
-        System.out.println("start node");
-        startNode.printNode();
+//        System.out.println("start node");
+//        startNode.printNode();
         unCheckedNodes.addFirst(nodeList.indexOf(startNode));
         paths.put(nodeList.indexOf(startNode), nodeList.indexOf(startNode));
 //        System.out.println("hash");
@@ -89,7 +89,7 @@ public class Graph implements PathContract{
                     nodeList.set(index1, nodeFirst);
                     nodeList.set(index2, nodeSecond);
 
-                    System.out.println("hello");
+//                    System.out.println("hello");
                     if(nodeList.indexOf(nodeSecond) == nodeList.indexOf(endNode)){
                         System.out.println(nodeList.indexOf(nodeSecond));
                         System.out.println(nodeList.indexOf(nodeFirst));
@@ -106,7 +106,7 @@ public class Graph implements PathContract{
 //                        System.out.println(n);
 //                        System.out.println("");
                         if (nodeList.get(n).getDist() > nodeSecond.getDist()){
-                            System.out.println("Removing:");
+//                            System.out.println("Removing:");
 //                            System.out.println(nodeList.indexOf(nodeSecond));
                             unCheckedNodes.remove((Integer) nodeList.indexOf(nodeSecond));
 //                            System.out.println(unCheckedNodes);
