@@ -53,12 +53,12 @@ public class Main {
         dd.add(2);
         rawDataConnect.add(dd);
 
-        Graph graphGen = new Graph();
-        ArrayList<Node> nodeList = graphGen.createGraph(rawData,rawDataConnect);
-        System.out.println("node list");
-        System.out.println(nodeList);
-        System.out.println(graphGen.dijkstrasAlgorithm(nodeList.get(0),nodeList.get(1)));
-
+//        Graph graphGen = new Graph();
+//        ArrayList<Node> nodeList = graphGen.createGraph(rawData,rawDataConnect);
+//        System.out.println("node list");
+//        System.out.println(nodeList);
+//        System.out.println(graphGen.dijkstrasAlgorithm(nodeList.get(0),nodeList.get(1)));
+//
     }
 
 }

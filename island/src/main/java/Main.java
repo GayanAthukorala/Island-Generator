@@ -25,6 +25,7 @@ public class Main {
         options.addOption("biomes", true, "Biomes");
         options.addOption("seed", true, "Island Seed");
         options.addOption("heatmap", true, "Type of HeatMap to Display");
+        options.addOption("cities", true, "Number of Cities");
         options.addOption("H", "help", false, "Command information");
         String input = null;
         String output = null;
@@ -44,6 +45,7 @@ public class Main {
         String riverStartIdx = "";
         String soil = "";
         String heatmap = "";
+        String cities = "";
 
         //Seed will be either inputted or created from the above parameters
         String seed = "";

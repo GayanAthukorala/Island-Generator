@@ -46,6 +46,7 @@ public class GraphicRenderer {
                     if (p.getValue().equals("169,169,169,255")){
                         isNeighbour = true;
                     }
+
                 }
             }
             double val = extractThickness(s.getPropertiesList());
@@ -95,17 +96,24 @@ public class GraphicRenderer {
             double centre_y = v.getY() - (THICKNESS/2.0d);
             boolean isCentroid = false;
             boolean isWater = false;
+            boolean isCity = false;
             for (Property p : v.getPropertiesList()) {
                 // TRY TO FIND THE RGB COLOR
                 if (p.getKey().equals("rgb_color")) {
                     if (p.getValue().equals("255,0,0,255")){    // If a vertex is red, it is a centroid
                         isCentroid = true;
                     }
-                    if (p.getValue().equals("0,0,255,255")){    // If a vertex is red, it is a centroid
+                    if (p.getValue().equals("0,0,255,255")){    // If a vertex is blue, it is a river
                         isWater = true;
                     }
+                    if (p.getValue().equals("0,255,0,255")){    // If a vertex is green, it is a city
+                        isCity = true;
+                        isCentroid =false;
+                    }
+
                 }
             }
+
             // If it is a irregular mode, show the centroids even without debug
             if (isIrreg){
                 // If it is in debug mode, get all vertices colours
@@ -122,6 +130,9 @@ public class GraphicRenderer {
                     Color old = canvas.getColor();
                     if (isWater){
                         canvas.setColor(Color.BLUE);
+                    }
+                    else if (isCity){
+                        canvas.setColor(Color.BLACK);
                     }
                     else{
                         canvas.setColor(extractColor(v.getPropertiesList()));
