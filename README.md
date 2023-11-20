@@ -1,5 +1,5 @@
 # Island Generator
-This is an Island Generator project created to practice Agile development and OOP best practice. The island generator takes in various parameters (or none!), and then creates a randomized and reproducable island. Cities can also be added to the island map generator, and Dijkstra's algorithm was used to connect these cities
+This is an Island Generator project created to practice Agile development and OOP best practices. The Island Generator takes in various parameters (or none!), and then creates a randomized and reproducable island. Cities can also be added to the island map generator, and Dijkstra's algorithm was used to connect these cities
 together via the shortest possible path
 
 ![Island Gen](https://github.com/GayanAthukorala/Island-Generator/assets/73492549/d6a8e0a5-02ef-457b-a241-304e1f08b217)
